@@ -81,8 +81,7 @@ namespace TestProject
                 // Salida
                 Assert.Equal(CantidadMovimiento, Operaciones.Movimientos);
             }
-            catch
-            {
+            catch{
                 // Salida
                 Assert.True(true); // Se presento la excepcion de valor menor o igual a 0
             }
@@ -93,10 +92,8 @@ namespace TestProject
         {
             // Entrada
             Operaciones.AperturaCuenta();
-
             // Proceso
             Operaciones.Deposito(20);
-
             // Salida
             Assert.Throws<ArgumentException>(() => Operaciones.Retiro(100));
         }
@@ -106,11 +103,9 @@ namespace TestProject
         {
             // Entrada
             Operaciones.AperturaCuenta();
-
             // Proceso
             Operaciones.Deposito(100);
             Operaciones.Retiro(100);
-
             // Salida
             Assert.Equal(0, Operaciones.Saldo);
         }
@@ -121,12 +116,10 @@ namespace TestProject
             // Entrada
             double Deposito = 100;
             double InteresValor = Interes.CalculoInteres(Deposito, 0.2);
-
             // Proceso
             Operaciones.AperturaCuenta();
             Operaciones.Deposito(Deposito);
             Operaciones.PagoIntereses();
-
             // Salida
             Assert.Equal(Deposito + InteresValor, Operaciones.Saldo);
         }
