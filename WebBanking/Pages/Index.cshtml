@@ -1,0 +1,48 @@
+﻿@page
+@model IndexModel
+@{
+	ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+	<h1 class="display-4">Web Banking</h1>
+	<p> Pruebe una de nuestras opciones</p>
+</div>
+
+<form method="post">
+	<div class="container bg-white border-bottom box-shadow mb-3 p-3">
+		<h3>
+			Su Cuenta
+		</h3>
+		Cuenta : <label id="cuenta">@((BankingLibrary.Operaciones.Cuenta == null) ? "N/A" : BankingLibrary.Operaciones.Cuenta)</label><br />
+		Saldo : <label id="saldo"> @((BankingLibrary.Operaciones.Saldo == null) ? "-" : BankingLibrary.Operaciones.Saldo.ToString())</label><br />
+		Movimientos : <label id="Movimientos"> @((BankingLibrary.Operaciones.Movimientos == null) ? "-" : BankingLibrary.Operaciones.Movimientos.ToString())</label><br />
+		<input type="submit" asp-page-handler="OpenAccount" value="Apertura de Nueva Cuenta">
+		<br />
+	</div>
+</form>
+
+<br />
+
+<form method="post">
+	<div class="container bg-white border-bottom box-shadow mb-3 p-3">
+		<h3>Operaciones</h3>
+		<label for="operacion">Operación : </label>
+		<select class="dropdown" id="operacion" asp-for="operation" disabled=@(BankingLibrary.Operaciones.Abierta == false)>
+			<option value="D">Depósito</option>
+			<option value="R">Retiro</option>
+		</select>
+		<br />
+
+		<label for="valor">Valor : </label>
+		<input type="number" id="valor" placeholder="0.00" step="any" asp-for="amount" disabled=@(BankingLibrary.Operaciones.Abierta == false)>
+		<br />
+		<input type="submit" asp-page-handler="ExecuteOperation" value="Proceder" disabled=@(BankingLibrary.Operaciones.Abierta == false)>
+		@{
+			if (!BankingLibrary.Operaciones.Abierta)
+			{
+				<label class="">Debe abrir la cuenta antes de realizar operaciones.</label>
+			}
+		}
+	</div>
+</form>
